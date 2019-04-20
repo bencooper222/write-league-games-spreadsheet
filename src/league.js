@@ -35,7 +35,7 @@ const getGameData = async matchId => {
   const theirTeam = fullData.teams.find(team => team.teamId !== yourData.teamId);
 
   return {
-    datetime: format(new Date(fullData.gameCreation)),
+    datetime: format(new Date(fullData.gameCreation), 'MM/DD/YYYY HH:mm:ss'),
     season: season(fullData.seasonId),
     queue: queue(fullData.queueId),
     duration: fullData.gameDuration / 60, //minutes
