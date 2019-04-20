@@ -35,10 +35,10 @@ workflows:
     triggers:
       - schedule:
           # 14 for 8am cst during DST, 13 otherwise.
-          cron: '0 14 * * *'
+          cron: '0 13 * * *'
           filters:
             branches:
               only:
                 - master
     jobs:
-- build
+      - build
