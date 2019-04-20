@@ -38,7 +38,8 @@ const getGameData = async matchId => {
   return {
     // datetime: format(new Date(fullData.gameCreation), 'MM/DD/YYYY HH:mm:ss'),
     datetime: moment
-      .tz(fullData.gameCreation, 'America/Chicago')
+      .utc(fullData.gameCreation)
+      .tz('America/Chicago')
       .format('MM/DD/YYYY HH:mm:ss'),
     season: season(fullData.seasonId),
     queue: queue(fullData.queueId),
