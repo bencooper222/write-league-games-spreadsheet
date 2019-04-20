@@ -1,10 +1,12 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const { getSummonerDataSince } = require('./src/league');
-const { updateGames } = require('./src/updateSheet');
+const { updateGames, getLast } = require('./src/sheet');
 
 (async () => {
-  const numDays = 14;
-  const gameData = await getSummonerDataSince(Date.now() - numDays * 8.64e7); //
-  updateGames(gameData);
+  try {
+    updateGames(await getSummonerDataSince((await getLast()).format('x')));
+  } catch (err) {
+    console.error('No games');
+  }
 })();

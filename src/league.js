@@ -1,6 +1,7 @@
 const league = new (require('leaguejs'))(process.env.LEAGUE_KEY);
 const fetch = require('node-fetch');
-const format = require('date-fns/format');
+const moment = require('moment-timezone');
+
 const Bottleneck = require('bottleneck');
 const limiter = new Bottleneck({
   minTime: 123, // 100 request per 2 min with a little wiggle room
@@ -15,7 +16,7 @@ exports.getSummonerDataSince = async beginTime => {
     { beginTime },
   )).matches;
 
-  return Promise.all(matchList.map(async (match, idx) => getGameData(match.gameId)));
+  return Promise.all(matchList.map(async match => getGameData(match.gameId)));
 };
 
 const getGameData = async matchId => {
@@ -35,7 +36,10 @@ const getGameData = async matchId => {
   const theirTeam = fullData.teams.find(team => team.teamId !== yourData.teamId);
 
   return {
-    datetime: format(new Date(fullData.gameCreation), 'MM/DD/YYYY HH:mm:ss'),
+    // datetime: format(new Date(fullData.gameCreation), 'MM/DD/YYYY HH:mm:ss'),
+    datetime: moment
+      .tz(fullData.gameCreation, 'America/Chicago')
+      .format('MM/DD/YYYY HH:mm:ss'),
     season: season(fullData.seasonId),
     queue: queue(fullData.queueId),
     duration: fullData.gameDuration / 60, //minutes
@@ -46,6 +50,7 @@ const getGameData = async matchId => {
     win: yourTeam.win === 'Win',
 
     // start your information
+    yourChamp: champion(yourData.championId),
     yourLane: yourData.timeline.lane,
     yourKills: yourData.stats.kills,
     yourDeaths: yourData.stats.deaths,

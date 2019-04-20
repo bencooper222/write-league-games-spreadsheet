@@ -1,6 +1,7 @@
 const { google } = require('googleapis');
 const client = require('./googleClient');
 const { decodeColumn } = require('excel-utils');
+const moment = require('moment-timezone');
 
 client.setCredentials({
   access_token: process.env.SHEETS_ACCESS_TOKEN,
@@ -46,4 +47,13 @@ exports.updateGames = async games => {
       console.log(`Success! ${res.data.updates.updatedCells} game data cells updated.`);
     },
   );
+};
+
+exports.getLast = async () => {
+  return (await sheets.spreadsheets.values.get({
+    spreadsheetId: process.env.SHEETS_SHEET_ID,
+    range: 'games!A2:A',
+  })).data.values
+    .map(datestring => moment(datestring, 'M/D/YYYY H:m:s').tz('America/Chicago'))
+    .reduce((acc, date) => (acc == null || acc.isBefore(date) ? date : acc), null);
 };
