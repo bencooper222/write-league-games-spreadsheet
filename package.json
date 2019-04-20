@@ -1,0 +1,25 @@
+{
+  "name": "write-league-games-spreadsheet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "prettier index.js ./src/*.js --write",
+    "update": "node index.js"
+  },
+  "author": "Benjamin Cooper",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "devDependencies": {
+    "dotenv": "^7.0.0",
+    "prettier": "^1.17.0"
+  },
+  "dependencies": {
+    "bottleneck": "^2.18.0",
+    "date-fns": "^1.30.1",
+    "excel-utils": "^1.0.0",
+    "googleapis": "^39.2.0",
+    "leaguejs": "^2.1.0",
+    "node-fetch": "^2.3.0"
+  }
+}
