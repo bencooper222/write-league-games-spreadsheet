@@ -14,7 +14,7 @@ exports.getSummonerDataSince = async beginTime => {
     process.env.LEAGUE_ACCOUNT_ID,
     process.env.LEAGUE_API_PLATFORM_ID,
     { beginTime },
-  )).matches;
+  )).matches.reduceRight((acc, el) => acc.concat(el), []);
 
   return Promise.all(matchList.map(async match => getGameData(match.gameId)));
 };
