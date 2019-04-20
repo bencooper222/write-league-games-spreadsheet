@@ -5,7 +5,9 @@ const { updateGames, getLast } = require('./src/sheet');
 
 (async () => {
   try {
-    updateGames(await getSummonerDataSince((await getLast()).format('x')));
+    updateGames(
+      await getSummonerDataSince((await getLast()).add(1, 'hours').format('x')),
+    );
   } catch (err) {
     console.error('No games');
   }

@@ -54,6 +54,6 @@ exports.getLast = async () => {
     spreadsheetId: process.env.SHEETS_SHEET_ID,
     range: 'games!A2:A',
   })).data.values
-    .map(datestring => moment(datestring, 'M/D/YYYY H:m:s').tz('America/Chicago'))
+    .map(datestring => moment.tz(datestring, 'M/D/YYYY H:m:s', 'America/Chicago'))
     .reduce((acc, date) => (acc == null || acc.isBefore(date) ? date : acc), null);
 };
