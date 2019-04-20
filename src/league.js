@@ -79,6 +79,29 @@ const getGameData = async matchId => {
     )),
     ...(await createBanList(yourTeam.bans.map(ban => ban.championId), 'your')),
     ...(await createBanList(theirTeam.bans.map(ban => ban.championId), 'their')),
+    ...(await createTeamList(
+      fullData.participants
+        .filter(participant => participant.teamId === yourTeam.teamId)
+        .map(
+          filtParticipant =>
+            fullData.participantIdentities.find(
+              ident => ident.participantId === filtParticipant.participantId,
+            ).player.summonerName,
+        ),
+      'your',
+    )),
+    // having their teamlist isn't very useful
+    // ...(await createTeamList(
+    //   fullData.participants
+    //     .filter(participant => participant.teamId !== yourTeam.teamId)
+    //     .map(
+    //       filtParticipant =>
+    //         fullData.participantIdentities.find(
+    //           ident => ident.participantId === filtParticipant.participantId,
+    //         ).player.summonerName,
+    //     ),
+    //   'their',
+    // )),
   };
 };
 
@@ -96,11 +119,11 @@ const requestGameData = async matchId => {
   return data.json();
 };
 
-const createGenericList = async (list, cycleName, keyPreface) => {
+const createGenericList = async (list, cycleName, keyPreface, useAPI = true) => {
   const rtn = {};
 
   for (let idx = 0; idx < list.length; idx++)
-    rtn[`${keyPreface}${cycleName}${idx}`] = champion(list[idx]);
+    rtn[`${keyPreface}${cycleName}${idx}`] = useAPI ? champion(list[idx]) : list[idx];
 
   for (let i = list.length; i < 5; i++) rtn[`${keyPreface}${cycleName}${i}`] = '';
 
@@ -112,3 +135,6 @@ const createBanList = async (bans, keyPreface) =>
 
 const createPickList = async (picks, keyPreface) =>
   createGenericList(picks, 'pick', keyPreface);
+
+const createTeamList = async (mates, keyPreface) =>
+  createGenericList(mates, 'mate', keyPreface, false);
