@@ -9,6 +9,7 @@ const { updateGames, getLast } = require('./src/sheet');
       await getSummonerDataSince((await getLast()).add(1, 'hours').format('x')),
     );
   } catch (err) {
-    console.error('No games');
+    console.error('No games', err);
+    process.exit(1);
   }
 })();
