@@ -12,7 +12,7 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "devDependencies": {
     "dotenv": "^7.0.0",
-    "prettier": "^1.17.0"
+    "prettier": "^1.19.1"
   },
   "dependencies": {
     "bottleneck": "^2.18.0",

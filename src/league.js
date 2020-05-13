@@ -11,7 +11,7 @@ const { season, queue, summSpell, champion } = require('./constants');
 
 exports.getSummonerDataSince = async beginTime => {
   const matchList = (await league.Match.gettingListByAccount(
-    process.env.LEAGUE_ACCOUNT_ID,
+    await getEncryptedAccountId(process.env.LEAGUE_SUMMONER_NAME),
     process.env.LEAGUE_API_PLATFORM_ID,
     { beginTime },
   )).matches.reduceRight((acc, el) => acc.concat(el), []);
@@ -25,7 +25,7 @@ const getGameData = async matchId => {
   const fullData = await requestGameData(matchId);
 
   const yourParticpantId = fullData.participantIdentities.find(
-    ident => ident.player.accountId === process.env.LEAGUE_ACCOUNT_ID,
+    ident => ident.player.summonerName === process.env.LEAGUE_SUMMONER_NAME,
   ).participantId;
 
   const yourData = fullData.participants.find(
@@ -123,6 +123,16 @@ const requestGameData = async matchId => {
   );
 
   return data.json();
+};
+
+const getEncryptedAccountId = async summonerName => {
+  const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${
+    process.env.LEAGUE_KEY
+  }`;
+
+  const json = await (await fetch(url)).json();
+
+  return json.accountId;
 };
 
 const createGenericList = async (list, cycleName, keyPreface, useAPI = true) => {
