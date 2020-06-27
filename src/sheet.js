@@ -18,13 +18,16 @@ const sheets = google.sheets({
 });
 
 // take from: https://github.com/bencooper222/build-your-own-mint/blob/master/lib/update.js
-exports.updateGames = async games => {
+exports.updateGames = async (games, summonerName) => {
   const updateObject = games.reduce(
     (acc, game) => {
       acc.values.push(Object.values(game));
       return acc;
     },
-    { range: `games!A1:${decodeColumn(Object.keys(games[0]).length)}1`, values: [] },
+    {
+      range: `${summonerName}!A1:${decodeColumn(Object.keys(games[0]).length)}1`,
+      values: [],
+    },
   );
 
   sheets.spreadsheets.values.append(
@@ -49,11 +52,13 @@ exports.updateGames = async games => {
   );
 };
 
-exports.getLast = async () => {
-  return (await sheets.spreadsheets.values.get({
-    spreadsheetId: process.env.SHEETS_SHEET_ID,
-    range: 'games!A2:A',
-  })).data.values
+exports.getLast = async summonerName => {
+  return (
+    await sheets.spreadsheets.values.get({
+      spreadsheetId: process.env.SHEETS_SHEET_ID,
+      range: `${summonerName}!A2:A`,
+    })
+  ).data.values
     .map(datestring => moment.tz(datestring, 'M/D/YYYY H:m:s', 'America/Chicago'))
     .reduce((acc, date) => (acc == null || acc.isBefore(date) ? date : acc), null);
 };

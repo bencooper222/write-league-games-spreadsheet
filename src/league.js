@@ -4,28 +4,35 @@ const moment = require('moment-timezone');
 
 const Bottleneck = require('bottleneck');
 const limiter = new Bottleneck({
-  minTime: 123, // 100 request per 2 min with a little wiggle room
+  minTime: 1320, // 100 request per 2 min with a little wiggle room
   maxConcurrent: 1,
 });
 const { season, queue, summSpell, champion } = require('./constants');
 
-exports.getSummonerDataSince = async beginTime => {
-  const matchList = (await league.Match.gettingListByAccount(
-    await getEncryptedAccountId(process.env.LEAGUE_SUMMONER_NAME),
-    process.env.LEAGUE_API_PLATFORM_ID,
-    { beginTime },
-  )).matches.reduceRight((acc, el) => acc.concat(el), []);
+exports.getSummonerDataBetween = async (summonerName, beginTime, endTime) => {
+  const matchList = (
+    await league.Match.gettingListByAccount(
+      await getEncryptedAccountId(summonerName),
+      process.env.LEAGUE_API_PLATFORM_ID,
+      { beginTime, endTime },
+    )
+  ).matches.reduceRight((acc, el) => acc.concat(el), []);
 
-  return Promise.all(matchList.map(async match => getGameData(match.gameId)));
+  return Promise.all(
+    matchList.map(async (match, idx) =>
+      getGameData(match.gameId, summonerName, idx, matchList.length),
+    ),
+  );
 };
 
-const getGameData = async matchId => {
+const getGameData = async (matchId, summonerName, logIdx, numMatches) => {
+  if (logIdx % 5 === 0) console.log(`Starting ${logIdx + 1} of ${numMatches}`);
   //   const fullData = await league.Match.gettingById(matchId);
   // the leaguejs module api for this just... breaks
   const fullData = await requestGameData(matchId);
 
   const yourParticpantId = fullData.participantIdentities.find(
-    ident => ident.player.summonerName === process.env.LEAGUE_SUMMONER_NAME,
+    ident => ident.player.summonerName === summonerName,
   ).participantId;
 
   const yourData = fullData.participants.find(
@@ -83,8 +90,14 @@ const getGameData = async matchId => {
         .map(teammate => teammate.championId),
       'their',
     )),
-    ...(await createBanList(yourTeam.bans.map(ban => ban.championId), 'your')),
-    ...(await createBanList(theirTeam.bans.map(ban => ban.championId), 'their')),
+    ...(await createBanList(
+      yourTeam.bans.map(ban => ban.championId),
+      'your',
+    )),
+    ...(await createBanList(
+      theirTeam.bans.map(ban => ban.championId),
+      'their',
+    )),
     ...(await createTeamList(
       fullData.participants
         .filter(participant => participant.teamId === yourTeam.teamId)
@@ -114,11 +127,7 @@ const getGameData = async matchId => {
 const requestGameData = async matchId => {
   const data = await limiter.schedule(() =>
     fetch(
-      `https://${
-        process.env.LEAGUE_API_PLATFORM_ID
-      }.api.riotgames.com/lol/match/v4/matches/${matchId}?api_key=${
-        process.env.LEAGUE_KEY
-      }`,
+      `https://${process.env.LEAGUE_API_PLATFORM_ID}.api.riotgames.com/lol/match/v4/matches/${matchId}?api_key=${process.env.LEAGUE_KEY}`,
     ),
   );
 
@@ -126,9 +135,7 @@ const requestGameData = async matchId => {
 };
 
 const getEncryptedAccountId = async summonerName => {
-  const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${
-    process.env.LEAGUE_KEY
-  }`;
+  const url = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${process.env.LEAGUE_KEY}`;
 
   const json = await (await fetch(url)).json();
 
@@ -146,11 +153,9 @@ const createGenericList = async (list, cycleName, keyPreface, useAPI = true) => 
   return rtn;
 };
 
-const createBanList = async (bans, keyPreface) =>
-  createGenericList(bans, 'ban', keyPreface);
+const createBanList = async (bans, keyPreface) => createGenericList(bans, 'ban', keyPreface);
 
-const createPickList = async (picks, keyPreface) =>
-  createGenericList(picks, 'pick', keyPreface);
+const createPickList = async (picks, keyPreface) => createGenericList(picks, 'pick', keyPreface);
 
 const createTeamList = async (mates, keyPreface) =>
   createGenericList(mates, 'mate', keyPreface, false);

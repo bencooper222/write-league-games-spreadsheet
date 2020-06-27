@@ -537,6 +537,7 @@ exports.champion = champID => {
     '517': 'Sylas',
     '518': 'Neeko',
     '555': 'Pyke',
+    '523': 'Aphelios',
   }[champID];
 };
 

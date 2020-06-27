@@ -22,7 +22,7 @@ jobs:
           paths:
             - node_modules
 
-      - run: npm run update
+      - run: npm run update -- --summoner Avol9 && npm run update -- --summoner skyfall3665
 
 workflows:
   version: 2
