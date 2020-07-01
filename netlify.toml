@@ -1,0 +1,3 @@
+[build]
+    command = "node challenge/makeJson.js && npm run build"
+    publish = "dist/"
