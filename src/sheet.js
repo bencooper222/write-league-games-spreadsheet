@@ -2,7 +2,6 @@ const { google } = require('googleapis');
 const client = require('./googleClient');
 const { decodeColumn } = require('excel-utils');
 const moment = require('moment-timezone');
-
 client.setCredentials({
   access_token: process.env.SHEETS_ACCESS_TOKEN,
   refresh_token: process.env.SHEETS_REFRESH_TOKEN,
@@ -61,4 +60,13 @@ exports.getLast = async summonerName => {
   ).data.values
     .map(datestring => moment.tz(datestring, 'M/D/YYYY H:m:s', 'America/Chicago'))
     .reduce((acc, date) => (acc == null || acc.isBefore(date) ? date : acc), null);
+};
+
+exports.getChallengeInfo = async (summonerName, startRow) => {
+  return (
+    await sheets.spreadsheets.values.get({
+      spreadsheetId: process.env.SHEETS_SHEET_ID,
+      range: `${summonerName}!C${startRow}:G`,
+    })
+  ).data.values;
 };
