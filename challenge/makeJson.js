@@ -9,17 +9,18 @@ const nextChampMap = sortedChamps.reduce((acc, el, idx) => {
   acc[el] = sortedChamps[idx + 1];
   return acc;
 }, {});
-console.log(nextChampMap);
+// console.log(nextChampMap);
 const skyfall3665Start = ['05/26/2020 22:27:54', 126];
 const avol9Start = ['05/08/2020 21:59:21', 2];
 
 const filterGames = games => {
   const onlyReal = games
     .filter(
-      ([queue]) =>
-        queue === '5v5 Ranked Solo games' ||
-        queue === '5v5 Draft Pick games' ||
-        queue === '5v5 Ranked Flex games',
+      ([queue, duration]) =>
+        (queue === '5v5 Ranked Solo games' ||
+          queue === '5v5 Draft Pick games' ||
+          queue === '5v5 Ranked Flex games') &&
+        Number(duration) > 5,
     )
     .map(el => {
       el[3] = el[3] === 'TRUE';
