@@ -15,7 +15,8 @@ const argv = require('yargs').argv;
       summonerName,
     );
   } catch (err) {
-    console.error('No games', err);
+    console.error(err);
+    if (err.statusCode === 404) process.exit(0);
     process.exit(1);
   }
 })();
