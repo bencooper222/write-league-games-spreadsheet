@@ -39,6 +39,25 @@ const myLineChart = new Chart(ctx, {
         },
       },
     },
+
+    scales: {
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'Champions completed',
+          },
+        },
+      ],
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'Games played',
+          },
+        },
+      ],
+    },
   },
   //   options: options,
 });
