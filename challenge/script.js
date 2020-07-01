@@ -15,6 +15,7 @@ const myLineChart = new Chart(ctx, {
         fill: false,
         backgroundColor: 'black',
         borderColor: 'red',
+        pointBackgroundColor: 'rgba(0, 0, 0, 0.1)',
       },
       {
         label: 'Skyfall3665',
@@ -23,6 +24,7 @@ const myLineChart = new Chart(ctx, {
         fill: false,
         backgroundColor: 'black',
         borderColor: 'purple',
+        pointBackgroundColor: 'rgba(0, 0, 0, 0.1)',
       },
     ],
   },
