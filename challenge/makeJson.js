@@ -47,7 +47,7 @@ const filterGames = games => {
 };
 
 const createDataset = filteredGames => {
-  const rtn = [];
+  const rtn = [{ x: 0, y: 0, champ: 'Start' }];
 
   let countChamps = 0;
   for (let i = 0; i < filteredGames.length; i++) {
