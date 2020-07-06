@@ -538,6 +538,7 @@ exports.champMap = {
   '555': 'Pyke',
   '523': 'Aphelios',
   '246': 'Qiyana',
+  '235': 'Senna',
 };
 
 exports.champion = champID => {
