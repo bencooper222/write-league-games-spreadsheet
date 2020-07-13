@@ -12,8 +12,8 @@ const myLineChart = new Chart(ctx, {
         label: `Avol9${
           trend.avol9[trend.avol9.length - 1].won == undefined
             ? ''
-            : ` | ${trend.avol9[trend.avol9.length - 1].x -
-                trend.avol9[trend.avol9.length - 2].x} game(s) into ${
+            : ` | ${trend.avol9[trend.avol9.length - 1].y -
+                trend.avol9[trend.avol9.length - 2].y} game(s) into ${
                 trend.avol9[trend.avol9.length - 1].champ
               }`
         }`,
@@ -30,8 +30,8 @@ const myLineChart = new Chart(ctx, {
         label: `skyfall3665${
           trend.skyfall3665[trend.skyfall3665.length - 1].won == undefined
             ? ''
-            : ` | ${trend.skyfall3665[trend.skyfall3665.length - 1].x -
-                trend.skyfall3665[trend.skyfall3665.length - 2].x} game(s) into ${
+            : ` | ${trend.skyfall3665[trend.skyfall3665.length - 1].y -
+                trend.skyfall3665[trend.skyfall3665.length - 2].y} game(s) into ${
                 trend.skyfall3665[trend.skyfall3665.length - 1].champ
               }`
         }`,
@@ -53,7 +53,7 @@ const myLineChart = new Chart(ctx, {
           console.log(tooltipItem);
           console.log(data);
           const champ = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].champ;
-          return `${champ} | ${tooltipItem.yLabel} in ${tooltipItem.xLabel}`;
+          return `${champ} | ${tooltipItem.xLabel} in ${tooltipItem.yLabel}`;
         },
       },
     },
@@ -63,7 +63,7 @@ const myLineChart = new Chart(ctx, {
         {
           scaleLabel: {
             display: true,
-            labelString: 'Champions completed',
+            labelString: 'Games played',
           },
         },
       ],
@@ -71,7 +71,7 @@ const myLineChart = new Chart(ctx, {
         {
           scaleLabel: {
             display: true,
-            labelString: 'Games played',
+            labelString: 'Champions completed',
           },
         },
       ],

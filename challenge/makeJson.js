@@ -57,8 +57,8 @@ const createDataset = filteredGames => {
       lastWinIdx = i;
       countChamps++;
       rtn.push({
-        x: i + 1,
-        y: countChamps,
+        y: i + 1,
+        x: countChamps,
 
         champ: game[4],
       });
@@ -71,7 +71,7 @@ const createDataset = filteredGames => {
 
   // won should always be false but to make bugs easier to notice, I'm using the value
   for (const [_, __, ___, won, champ] of inProgressChampGames) {
-    rtn.push({ x: rtn[rtn.length - 1].x + 1, y: countChamps, champ, won });
+    rtn.push({ y: rtn[rtn.length - 1].y + 1, x: countChamps, champ, won });
   }
 
   return rtn;
