@@ -23,7 +23,7 @@ jobs:
             - node_modules
 
       - run: npm run update -- --summoner Avol9 && npm run update -- --summoner skyfall3665
-      - run: curl -X POST -d {} ${NETLIFY_BUILD_HOOK}
+      - run: node pingNetlify.js
 workflows:
   version: 2
 
