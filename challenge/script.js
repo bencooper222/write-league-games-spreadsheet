@@ -9,23 +9,39 @@ const myLineChart = new Chart(ctx, {
   data: {
     datasets: [
       {
-        label: 'Avol9',
+        label: `Avol9${
+          trend.avol9[trend.avol9.length - 1].won == undefined
+            ? ''
+            : ` | ${trend.avol9[trend.avol9.length - 1].x -
+                trend.avol9[trend.avol9.length - 2].x} game(s) into ${
+                trend.avol9[trend.avol9.length - 1].champ
+              }`
+        }`,
         data: trend.avol9,
         showLine: true,
         fill: false,
         backgroundColor: 'black',
         borderColor: 'red',
-        pointBackgroundColor: 'rgba(0, 0, 0, 0.1)',
+        pointBackgroundColor: 'red',
+        // pointRadius: 2,
         lineTension: 0,
       },
       {
-        label: 'Skyfall3665',
+        label: `skyfall3665${
+          trend.skyfall3665[trend.skyfall3665.length - 1].won == undefined
+            ? ''
+            : ` | ${trend.skyfall3665[trend.skyfall3665.length - 1].x -
+                trend.skyfall3665[trend.skyfall3665.length - 2].x} game(s) into ${
+                trend.skyfall3665[trend.skyfall3665.length - 1].champ
+              }`
+        }`,
         data: trend.skyfall3665,
         showLine: true,
         fill: false,
         backgroundColor: 'black',
         borderColor: 'purple',
-        pointBackgroundColor: 'rgba(0, 0, 0, 0.1)',
+        pointBackgroundColor: 'purple',
+        pointRadius: 2,
         lineTension: 0,
       },
     ],
