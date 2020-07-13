@@ -7,10 +7,12 @@ const argv = require('yargs').argv;
   try {
     const summonerName =
       argv.summoner == undefined ? process.env.LEAGUE_SUMMONER_NAME : argv.summoner;
+
+    const { datetime: lastDatetime, duration } = await getLast(summonerName);
     updateGames(
       await getSummonerDataBetween(
         summonerName,
-        (await getLast(summonerName)).add(30, 'minutes').format('x'),
+        lastDatetime.add(duration - 0.2, 'minutes').format('x'),
       ),
       summonerName,
     );

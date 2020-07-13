@@ -52,14 +52,26 @@ exports.updateGames = async (games, summonerName) => {
 };
 
 exports.getLast = async summonerName => {
-  return (
+  const sheetData = (
     await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.SHEETS_SHEET_ID,
-      range: `${summonerName}!A2:A`,
+      range: `${summonerName}!A2:D`,
     })
-  ).data.values
-    .map(datestring => moment.tz(datestring, 'M/D/YYYY H:m:s', 'America/Chicago'))
-    .reduce((acc, date) => (acc == null || acc.isBefore(date) ? date : acc), null);
+  ).data.values;
+
+  const datetimeDurationList = sheetData.map(([datestring, _, __, duration]) => ({
+    datetime: moment.tz(datestring, 'M/D/YYYY H:m:s', 'America/Chicago'),
+    duration: Number(duration),
+  }));
+
+  const last = datetimeDurationList.reduce((acc, datetimeDuration) => {
+    if (acc === null) return datetimeDuration;
+    if (acc.datetime.isBefore(datetimeDuration.datetime)) return datetimeDuration;
+
+    return acc;
+  }, null);
+
+  return last;
 };
 
 exports.getChallengeInfo = async (summonerName, startRow) => {
