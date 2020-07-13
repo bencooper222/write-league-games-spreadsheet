@@ -10,7 +10,7 @@ const argv = require('yargs').argv;
     updateGames(
       await getSummonerDataBetween(
         summonerName,
-        (await getLast(summonerName)).add(1, 'hours').format('x'),
+        (await getLast(summonerName)).add(30, 'minutes').format('x'),
       ),
       summonerName,
     );
