@@ -17,7 +17,7 @@ const myLineChart = new Chart(ctx, {
                 trend.avol9[trend.avol9.length - 1].champ
               }`
         }`,
-        data: trend.avol9,
+        data: trend.avol9.filter(el => el.won == undefined),
         showLine: true,
         fill: false,
         backgroundColor: 'black',
@@ -35,7 +35,7 @@ const myLineChart = new Chart(ctx, {
                 trend.skyfall3665[trend.skyfall3665.length - 1].champ
               }`
         }`,
-        data: trend.skyfall3665,
+        data: trend.skyfall3665.filter(el => el.won == undefined),
         showLine: true,
         fill: false,
         backgroundColor: 'black',

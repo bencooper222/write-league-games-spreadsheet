@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "prettier index.js ./src/*.js --write",
-    "update": "npm run update:sheet",
+    "update": "node index.js",
     "update:sheet": "node index.js",
     "dev": "parcel challenge/index.html",
     "build": "parcel build challenge/index.html",
-    "update:netlify": "npm run update:sheet",
+    "update:netlify": "node scripts/pingNetlify.js",
     "update:sheet+netlify": "npm run update:sheet && npm run update:netlify"
   },
   "author": "Benjamin Cooper",
