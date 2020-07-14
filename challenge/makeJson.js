@@ -68,11 +68,17 @@ const createDataset = filteredGames => {
   // if there are games for the challenge after the last win, this array will be non-empty
   // these are games for the inprogress champion (should all be losses)
   const inProgressChampGames = filteredGames.slice(lastWinIdx + 1);
-
+  if (inProgressChampGames.length > 0)
+    rtn.push({
+      y: rtn[rtn.length - 1].y + inProgressChampGames.length,
+      x: countChamps,
+      champ: inProgressChampGames[0][4],
+      won: false,
+    });
   // won should always be false but to make bugs easier to notice, I'm using the value
-  for (const [_, __, ___, won, champ] of inProgressChampGames) {
-    rtn.push({ y: rtn[rtn.length - 1].y + 1, x: countChamps, champ, won });
-  }
+  //  for (const [_, __, ___, won, champ] of inProgressChampGames) {
+  //  rtn.push({ y: rtn[rtn.length - 1].y + 1, x: countChamps, champ, won });
+  // }
 
   return rtn;
 };
