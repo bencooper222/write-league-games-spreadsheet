@@ -23,7 +23,7 @@ jobs:
             - node_modules
 
       - run: npm run update -- --summoner Avol9 && npm run update -- --summoner skyfall3665
-      - run: node pingNetlify.js
+      - run: npm run update:netlify
 workflows:
   version: 2
 
