@@ -389,6 +389,10 @@ exports.queue = queueID => {
       Description: 'Nexus Blitz games',
       Notes: '',
     },
+    '1300': {
+      Map: 'Lillia Map',
+      Description: 'Nexus Blitz But With Lillia Shit',
+    },
   }[queueID].Description;
 };
 
