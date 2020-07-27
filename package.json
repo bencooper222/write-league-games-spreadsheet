@@ -25,12 +25,16 @@
     "bottleneck": "^2.18.0",
     "chart.js": "^2.9.3",
     "chartjs-plugin-datalabels": "^0.7.0",
+    "chokidar": "^3.4.1",
     "excel-utils": "^1.0.0",
+    "finalhandler": "^1.1.2",
     "googleapis": "^39.2.0",
     "leaguejs": "^2.1.0",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "node-fetch": "^2.3.0",
+    "puppeteer": "^5.2.1",
+    "serve-static": "^1.14.1",
     "yargs": "^15.4.1"
   }
 }
