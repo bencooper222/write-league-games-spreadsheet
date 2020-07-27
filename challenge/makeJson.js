@@ -19,8 +19,9 @@ const filterGames = games => {
       ([queue, duration]) =>
         (queue === '5v5 Ranked Solo games' ||
           queue === '5v5 Draft Pick games' ||
-          queue === '5v5 Ranked Flex games') &&
-        Number(duration) > 5,
+          queue === '5v5 Ranked Flex games' ||
+          queue === '5v5 Blind Pick games') &&
+        Number(duration) > 4.5,
     )
     .map(el => {
       el[3] = el[3] === 'TRUE';
