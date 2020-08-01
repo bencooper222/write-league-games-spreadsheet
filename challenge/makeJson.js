@@ -10,8 +10,8 @@ const nextChampMap = sortedChamps.reduce((acc, el, idx) => {
   return acc;
 }, {});
 // console.log(nextChampMap);
-const skyfall3665Start = ['05/26/2020 22:27:54', 126];
-const avol9Start = ['05/08/2020 21:59:21', 2];
+const skyfall3665StartEnd = ['05/26/2020 22:27:54', 126, undefined];
+const avol9StartEnd = ['05/08/2020 21:59:21', 2, 364];
 
 const filterGames = games => {
   const onlyReal = games
@@ -85,10 +85,14 @@ const createDataset = filteredGames => {
 };
 
 (async () => {
-  const skyfallGames = await sheetApi.getChallengeInfo('skyfall3665', skyfall3665Start[1]);
+  const skyfallGames = await sheetApi.getChallengeInfo(
+    'skyfall3665',
+    skyfall3665StartEnd[1],
+    skyfall3665StartEnd[2],
+  );
   const skyfall3665 = createDataset(filterGames(skyfallGames));
 
-  const avolGames = await sheetApi.getChallengeInfo('avol9', avol9Start[1]);
+  const avolGames = await sheetApi.getChallengeInfo('avol9', avol9StartEnd[1], avol9StartEnd[2]);
   const avol9 = createDataset(filterGames(avolGames));
 
   const json = { avol9, skyfall3665 };

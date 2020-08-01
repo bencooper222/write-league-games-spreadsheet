@@ -74,11 +74,11 @@ exports.getLast = async summonerName => {
   return last;
 };
 
-exports.getChallengeInfo = async (summonerName, startRow) => {
+exports.getChallengeInfo = async (summonerName, startRow, endRow) => {
   return (
     await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.SHEETS_SHEET_ID,
-      range: `${summonerName}!C${startRow}:G`,
+      range: `${summonerName}!C${startRow}:G${endRow ? endRow : ''}`,
     })
   ).data.values;
 };
