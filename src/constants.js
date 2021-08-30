@@ -393,6 +393,38 @@ exports.queue = queueID => {
       Map: 'Lillia Map',
       Description: 'Nexus Blitz But With Lillia Shit',
     },
+
+    '1400': {
+      map: "Summoner's Rift",
+
+      description: 'Ultimate Spellbook games',
+
+      notes: null,
+    },
+
+    '2000': {
+      map: "Summoner's Rift",
+
+      description: 'Tutorial 1',
+
+      notes: null,
+    },
+
+    '2010': {
+      map: "Summoner's Rift",
+
+      description: 'Tutorial 2',
+
+      notes: null,
+    },
+
+    '2020': {
+      map: "Summoner's Rift",
+
+      description: 'Tutorial 3',
+
+      notes: null,
+    },
   }[queueID].Description;
 };
 
