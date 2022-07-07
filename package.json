@@ -28,7 +28,7 @@
     "excel-utils": "^1.0.0",
     "googleapis": "^39.2.0",
     "leaguejs": "^2.1.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.31",
     "node-fetch": "^2.3.0",
     "yargs": "^15.4.1"
