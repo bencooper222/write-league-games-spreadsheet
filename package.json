@@ -29,7 +29,7 @@
     "googleapis": "^39.2.0",
     "leaguejs": "^2.1.0",
     "moment": "^2.27.0",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.35",
     "node-fetch": "^2.3.0",
     "yargs": "^15.4.1"
   }
